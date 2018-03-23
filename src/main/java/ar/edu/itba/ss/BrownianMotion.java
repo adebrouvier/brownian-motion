@@ -26,7 +26,7 @@ public class BrownianMotion{
         List<Particle> particles = new ArrayList<>();
 
         /* Add big particle */
-        particles.add(new Particle(1, randomCoord(R2), randomCoord(R2), 0, 0, M2, R2));
+        particles.add(new Particle(1, L/2, L/2, 0, 0, M2, R2));
 
         for (int i = 0; i < CliParser.numberOfParticles; i++){
 
@@ -47,7 +47,7 @@ public class BrownianMotion{
 
     private static void brownianMotion(List<Particle> particles) {
 
-        for (int i = 0; i < 1; i++){
+        for (int i = 0; i < CliParser.time; i++){
             double tc = Double.POSITIVE_INFINITY;
             Particle pi = null;
             Particle pj = null;
@@ -72,7 +72,7 @@ public class BrownianMotion{
 
                 /* Particle collision */
                 for (Particle otherParticle : particles){
-                    if (particle.getId() != otherParticle.getId()){
+                    if (particle.getId() < otherParticle.getId()){
 
                         double dX = otherParticle.getX() - particle.getX();
                         double dY = otherParticle.getY() - particle.getY();
@@ -81,7 +81,7 @@ public class BrownianMotion{
 
                         double dVdR = dVx*dX + dVy*dY;
 
-                        if (dVdR  >= 0){
+                        if (Double.compare(dVdR, 0) >= 0){
                             continue;
                         }
 
@@ -93,15 +93,20 @@ public class BrownianMotion{
 
                         double d = Math.pow(dVdR, 2) - dVdV * (dRdR - Math.pow(sigma ,2));
 
-                        if (d < 0){
+                        if (Double.compare(d, 0) < 0){
                             continue;
                         }
 
                         double ptc = (-1) * (dVdR + Math.sqrt(d)) / dVdV;
 
+                        /*if (ptc < 0){
+                            continue;
+                        }*/
+
                         if (ptc < tc){
                             tc = ptc;
                             particle.setCollision(Particle.CollisionType.PARTICLE);
+                            otherParticle.setCollision(Particle.CollisionType.PARTICLE);
                             pi = particle;
                             pj = otherParticle;
                         }
@@ -113,7 +118,12 @@ public class BrownianMotion{
 
             updateSpeed(pi, pj);
 
-            System.out.println("tc: " + tc + " - " + pi.toString());
+            //System.out.println("tc: " + tc + " - " + pi.toString());
+            System.out.println(particles.size());
+            System.out.println(i);
+            for (Particle p : particles){
+                System.out.println(p.getX() + "\t" + p.getY() + "\t" + p.getVx() + "\t" + p.getVy() + "\t" + p.getRadius());
+            }
         }
     }
 
