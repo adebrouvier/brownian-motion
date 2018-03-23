@@ -97,11 +97,7 @@ public class BrownianMotion{
                             continue;
                         }
 
-                        double ptc = (-1) * (dVdR + Math.sqrt(d)) / dVdV;
-
-                        /*if (ptc < 0){
-                            continue;
-                        }*/
+                        double ptc = (-1) * ((dVdR + Math.sqrt(d)) / dVdV);
 
                         if (ptc < tc){
                             tc = ptc;
@@ -119,11 +115,14 @@ public class BrownianMotion{
             updateSpeed(pi, pj);
 
             //System.out.println("tc: " + tc + " - " + pi.toString());
-            System.out.println(particles.size());
+            System.out.println(particles.size() + 2);
             System.out.println(i);
             for (Particle p : particles){
                 System.out.println(p.getX() + "\t" + p.getY() + "\t" + p.getVx() + "\t" + p.getVy() + "\t" + p.getRadius());
             }
+            // Print two particles for Ovito animation
+            System.out.println(0 + "\t" + 0 + "\t" + 0 + "\t" + 0 + "\t" + 0.001);
+            System.out.println(L + "\t" + L + "\t" + 0 + "\t" + 0 + "\t" + 0.001);
         }
     }
 
@@ -221,15 +220,15 @@ public class BrownianMotion{
             double dVdR = dVx*dX + dVy*dY;
             double sigma = pi.getRadius() + pj.getRadius();
 
-            double J = 2*pi.getMass()*pj.getMass()*dVdR / sigma * (pi.getMass() + pj.getMass());
+            double J = (2*pi.getMass()*pj.getMass()*dVdR) / (sigma * (pi.getMass() + pj.getMass()));
             double Jx = J * dX / sigma;
             double Jy = J * dY / sigma;
 
             pi.setVx(pi.getVx() + Jx/pi.getMass());
             pi.setVy(pi.getVy() + Jy/pi.getMass());
 
-            pj.setVx(pj.getVx() + Jx/pj.getMass());
-            pj.setVy(pj.getVy() + Jy/pj.getMass());
+            pj.setVx(pj.getVx() - Jx/pj.getMass());
+            pj.setVy(pj.getVy() - Jy/pj.getMass());
         }
 
     }
