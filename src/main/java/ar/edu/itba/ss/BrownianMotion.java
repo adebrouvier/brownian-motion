@@ -46,8 +46,8 @@ public class BrownianMotion{
     }
 
     private static void brownianMotion(List<Particle> particles) {
-
-        for (int i = 0; i < CliParser.time; i++){
+        int colNum = 0;
+        for (double t = 0; t < CliParser.time; ){
             double tc = Double.POSITIVE_INFINITY;
             Particle pi = null;
             Particle pj = null;
@@ -114,15 +114,17 @@ public class BrownianMotion{
 
             updateSpeed(pi, pj);
 
+            t += tc;
+
             //System.out.println("tc: " + tc + " - " + pi.toString());
             System.out.println(particles.size() + 2);
-            System.out.println(i);
+            System.out.println(colNum++);
             for (Particle p : particles){
-                System.out.println(p.getX() + "\t" + p.getY() + "\t" + p.getVx() + "\t" + p.getVy() + "\t" + p.getRadius());
+                System.out.println(p.getX() + "\t" + p.getY() + "\t" + p.getVx() + "\t" + p.getVy() + "\t" + p.getRadius() + "\t" + tc);
             }
             // Print two particles for Ovito animation
-            System.out.println(0 + "\t" + 0 + "\t" + 0 + "\t" + 0 + "\t" + 0.001);
-            System.out.println(L + "\t" + L + "\t" + 0 + "\t" + 0 + "\t" + 0.001);
+            System.out.println(0 + "\t" + 0 + "\t" + 0 + "\t" + 0 + "\t" + 0.001 + "\t" + 0);
+            System.out.println(L + "\t" + L + "\t" + 0 + "\t" + 0 + "\t" + 0.001 + "\t" + 0);
         }
     }
 
