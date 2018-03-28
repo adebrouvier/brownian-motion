@@ -25,3 +25,8 @@ hs_err_pid*
 # IntellijIDEA
 .idea/
 *.iml
+
+octave-workspace
+*.data
+*.xyz
+*.csv
