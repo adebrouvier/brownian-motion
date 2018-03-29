@@ -39,7 +39,18 @@ public class BrownianMotion{
             }
             while (!validCords(x,y, particles));
 
-            particles.add(new Particle(i+2, x, y, randomSpeed(), randomSpeed(), M1, R1));
+            double vx;
+            double vy;
+
+            if (CliParser.temperature == 0){
+                vx = randomSpeed();
+                vy = randomSpeed();
+            }else{
+                vx = CliParser.temperature;
+                vy = CliParser.temperature;
+            }
+
+            particles.add(new Particle(i+2, x, y, vx, vy, M1, R1));
         }
 
         return particles;
