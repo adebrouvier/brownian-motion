@@ -1,7 +1,7 @@
 import sys
 import subprocess
 import csv
-
+import math
 name, particles, time, q, filename = sys.argv
 q = int(q)
 with open(filename, 'w') as f:
@@ -19,7 +19,12 @@ with open(filename, 'w') as f:
         numberOfParticles = int(lines[0])
 
         collisions = [float(lines[x].split()[-1]) for x in range(0, len(lines)) if x % (numberOfParticles + 2) == 2]
-        values = values + collisions
         retval = p.wait()
-
+        length = int(math.ceil(sum(collisions)))
+        data = [0 for x in range(0,length)]
+        t = 0
+        for x in collisions:
+            t += x
+            data[int(math.floor(t))] += 1
+        values = values + data
         csv_writer.writerow(values)
