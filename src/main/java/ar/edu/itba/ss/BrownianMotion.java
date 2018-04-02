@@ -49,6 +49,16 @@ public class BrownianMotion{
                 double V = CliParser.temperature/CliParser.numberOfParticles;
                 vx = V/Math.sqrt(2);
                 vy = V/Math.sqrt(2);
+
+                double sign = Math.random();
+                if (sign > 0.5){
+                    vx = vx * (-1);
+                }
+                sign = Math.random();
+                if (sign > 0.5){
+                    vy = vy * (-1);
+                }
+
             }
 
             particles.add(new Particle(i+2, x, y, vx, vy, M1, R1));
