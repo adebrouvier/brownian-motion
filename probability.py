@@ -16,7 +16,9 @@ with open(filename, 'w') as f:
     lines =  p.stdout.readlines()
     numberOfParticles = int(lines[0])
 
-    collisions = [float(lines[x].split()[-1]) for x in range(0, len(lines)) if x % (numberOfParticles + 2) == 2]        
+    collisions = [float(lines[x].split()[-1]) for x in range(0, len(lines)) if x % (numberOfParticles + 2) == 2]
+    average = sum(collisions)/len(collisions)
+    print('AVERAGE: ' + str(average))
     retval = p.wait()
     data = range(0,100000,1)
     data = [x/100000.0 for x in data]
@@ -27,8 +29,7 @@ with open(filename, 'w') as f:
                 continue
             values[i] += 1
     values = [x/float(len(collisions)) for x in values]
-    print(values)
-    
+
     csv_writer.writerow(['time', 'probability'])
     for i in range(0, len(data)):
         csv_writer.writerow([data[i], values[i]])
