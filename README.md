@@ -9,7 +9,7 @@ mvn package
 ## Execution
 
 ```
-target/brownian-motion-1.0-SNAPSHOT-jar-with-dependencies.jar -p 100 -t 100 
+java -jar target/brownian-motion-1.0-SNAPSHOT-jar-with-dependencies.jar -p 100 -t 100 
 ```
 Parameters:
 
