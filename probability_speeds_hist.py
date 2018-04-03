@@ -6,11 +6,9 @@ import math
 def probability_calculator(ranges, data):
     values = [0 for x in range(0, len(ranges))]
     for x in data:
-        for i in range(0,len(ranges)):
-            if x > ranges[i]:
-                continue
-            values[i] += 1
-    values = [x/float(len(data)) for x in values]
+        for i in range(0,len(values)):
+            if x > ranges[i] and x < ranges[i+1]:
+                values[i] += 1
     return values
 
 name, particles, time, q, filename = sys.argv
